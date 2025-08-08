@@ -5,8 +5,8 @@
 ## 📋 프로젝트 개요
 "AI로 읽는 소아 복부 X-ray — Segmentation과 소아의 X-Ray 이미지와 부가 정보를 이해하는 AI Captioning 모델을 구현"
 
-본 프로젝트는 소아 복부 X-ray 영상을 대상으로 **Segmentation**을 수행하여 소아 복부의 구조와 이상 소견을 시각화하고,
-영상 데이터와 환자 메타데이터(나이, 진단 라벨 등)를 함께 활용하여 **의료 보고서 형태의 문장(Image + Meta Captioning)**을 자동 생성하는 AI 모델을 개발한 프로젝트입니다.  
+본 프로젝트는 소아의 이름을 입력하면, 소아 복부 X-ray 영상을 대상으로 **Segmentation**을 수행하여 소아 복부의 구조와 이상 소견을 시각화하고,
+영상 데이터와 환자 메타데이터(나이, 진단 라벨 등)를 함께 활용하여 **의료 진단서 형태의 문장(Image + Meta Captioning)**을 자동 생성하는 AI 모델을 개발한 프로젝트입니다.  
 
 의료진에게 영상 판독 및 진단에 대해 보조를 지원하여 정확도를 향상시키고, 추후에 진단 보조 Agent 역할을 수행할 수 있는 것을 목표로 합니다.
 
@@ -99,8 +99,11 @@
 
 ## 📈 시각 자료
 - Segmentation 예시
+<img width="1196" height="862" alt="image" src="https://github.com/user-attachments/assets/614f2162-8a35-4373-bd48-793b345c5f6c" />
+
 - Captioning 예측 결과 샘플
-*(이미지는 README 내 삽입 가능)*
+<img width="1156" height="382" alt="image" src="https://github.com/user-attachments/assets/e47a74f1-1ebb-4844-a673-9bf86161c613" />
+
 
 ---
 
