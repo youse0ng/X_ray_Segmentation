@@ -1,5 +1,5 @@
 # 🩻 X-ray 기반 소아 Segmentation & Image + Meta Captioning 모델
-<img width="1113" height="618" alt="image" src="https://github.com/user-attachments/assets/44c2b8ce-e4fb-4ec6-b0b6-7a9d685fd689" />
+<img width="1113" height="611" alt="image" src="https://github.com/user-attachments/assets/0367b0d2-2fc7-4160-b57d-1646e7aa2e21" />
 ---
 
 ## 📋 프로젝트 개요
@@ -40,7 +40,7 @@
 ## 📝 문제 정의
 ❓ **복부 X-ray 영상과 환자 메타데이터를 기반으로,  
 1) 병변 위치를 Segmentation 하고  
-2) 의료 보고서 문장을 자동 생성하는 것**
+2) 진단 지원 문장을 자동 생성하는 것**
 
 ---
 
@@ -63,6 +63,9 @@
 - BERT tokenizer로 메타데이터 임베딩
 - Cross-Attention으로 통합 Feature 생성
 - 학습 전/후 통합 Feature 벡터 시각화 (Y-Target Levels 별로 통합 Feature 벡터가 잘 분류되었는지 파악하기 위함)
+
+<img width="1124" height="635" alt="image" src="https://github.com/user-attachments/assets/7f356782-4443-4586-ad69-028d89898285" />
+
 
 4️⃣ **Captioning 디코더**
 - Transformer 기반 Decoder 설계
