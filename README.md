@@ -83,7 +83,7 @@
 ### ✅ Image + Meta Captioning
 - 입력: 복부 X-ray + (환자 나이 + 진단 라벨)
 - 출력 예시:
-This plain abdominal supine radiograph shows prominent gastric distension with features suggestive of pyloric stenosis.
+`This plain abdominal supine radiograph shows prominent gastric distension with features suggestive of pyloric stenosis.`
 
 ---
 
