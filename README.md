@@ -1,14 +1,14 @@
 # 🩻 X-ray 기반 소아 Segmentation & Image + Meta Captioning 모델
-
+<img width="1113" height="618" alt="image" src="https://github.com/user-attachments/assets/44c2b8ce-e4fb-4ec6-b0b6-7a9d685fd689" />
 ---
 
 ## 📋 프로젝트 개요
-"AI로 읽는 소아 복부 X-ray — Segmentation과 의료 보고서 생성"
+"AI로 읽는 소아 복부 X-ray — Segmentation과 소아의 X-Ray 이미지와 부가 정보를 이해하는 AI Captioning 모델을 구현"
 
-본 프로젝트는 소아 복부 X-ray 영상을 대상으로 **Segmentation**을 수행하여 주요 구조와 이상 소견을 분리하고,  
+본 프로젝트는 소아 복부 X-ray 영상을 대상으로 **Segmentation**을 수행하여 소아 복부의 구조와 이상 소견을 시각화하고,
 영상 데이터와 환자 메타데이터(나이, 진단 라벨 등)를 함께 활용하여 **의료 보고서 형태의 문장(Image + Meta Captioning)**을 자동 생성하는 AI 모델을 개발한 프로젝트입니다.  
 
-의료진이 영상 판독 및 보고서를 작성하는 시간을 절약하고, 진단 보조 역할을 수행할 수 있는 것을 목표로 합니다.
+의료진에게 영상 판독 및 진단에 대해 보조를 지원하여 정확도를 향상시키고, 추후에 진단 보조 Agent 역할을 수행할 수 있는 것을 목표로 합니다.
 
 ---
 
@@ -16,10 +16,10 @@
 | 구분        | 내용 |
 |-------------|------|
 | 분석 대상   | 소아 복부 X-ray 이미지 |
-| 라벨 종류   | `Pyloric Stenosis`, `Constipation`, `Normal` |
+| 라벨 종류   | `Pyloric Stenosis`,`Air-Fluid Level`,`Abdominal Distension`,`Constipation`, `Normal` |
 | 메타데이터  | 환아 나이, 촬영 정보, 진단 라벨 |
 | 출처        | 자체 수집/가공 데이터 |
-| 데이터 구조 | 이미지 파일 + 메타데이터 CSV (ImagePath, Class, Age, PatientName, Caption) |
+| 데이터 구조 | 이미지 파일 + 메타데이터 CSV (ImagePath, Point, Class, Age, PatientName, Caption) |
 
 ---
 
@@ -28,12 +28,12 @@
 | 분류       | 기술 | 용도 |
 |------------|------|------|
 | 💻 언어    | Python | 전체 프로젝트 개발 |
-| 데이터 처리 | Pandas, NumPy | 전처리, 통계 분석, 메타데이터 병합 |
-| 이미지 처리 | OpenCV, PIL | 영상 로드/전처리 |
+| 데이터 처리 | Pandas, PyTorch | 데이터 전처리 및 데이터 파이프라인 설계 |
+| 이미지 처리 | PIL, PyTorch | 영상 로드/전처리 및 텐서화 |
 | 모델 학습  | PyTorch | Segmentation, Cross-Attention 기반 Captioning |
-| 딥러닝 구조 | ViT, BERT | Vision-Language Feature 추출 |
-| 시각화     | Matplotlib, Seaborn | 학습 곡선, 예측 결과 시각화 |
-| 환경       | CUDA, Jupyter Notebook | GPU 학습 환경, 분석 문서화 |
+| 딥러닝 구조 | ViT, BERT, Cross-Attention, Text Generator Decoder | Vision-Language Feature 추출 및 두 Feature 연관성 Integrated Feature 추출 및 Generate Text |
+| 시각화     | Matplotlib, Streamlit | 학습에 중요한 벡터 시각화, 예측 결과 시각화 |
+| 환경       | CUDA, Jupyter Notebook, .Py | GPU 학습 (3060ti) 환경 및 16GB 메모리 필요 그 이하는 OOM(Out Of Memory) 위험 |
 
 ---
 
@@ -47,36 +47,38 @@
 ## 📊 분석·모델링 방법론
 
 1️⃣ **데이터 전처리**
-- 이미지 리사이즈, 정규화
-- 메타데이터 결측치 처리 및 라벨 인코딩
-- 데이터셋 Train/Validation/Test 분할
+- 원자료로부터 필요한 데이터 파싱 (Point, Image, 메타데이터)
+- 이미지 정규화
+- 메타데이터 파싱
+- 데이터 파이프라인 구현
+- 데이터셋 Train/Test 분할
 
 2️⃣ **Segmentation 모델**
-- ONNX 기반 사전 학습 모델(`Segmentation.onnx`) 로드
-- 의료 영역에 맞춘 커스텀 데이터셋 생성
-- 성능 지표: Dice Score, IoU
+- 의료 영역에 맞춘 커스텀 데이터셋(Point, Image) 생성
+- DeepLabv3 모델 (PyTorch) 모델 재구성 및 파인 튜닝 진행
+- 성능 지표: Pixel Accuracy: 97%
 
 3️⃣ **Image + Meta Feature 추출**
 - Vision Transformer(ViT)로 이미지 특징 추출
 - BERT tokenizer로 메타데이터 임베딩
 - Cross-Attention으로 통합 Feature 생성
+- 학습 전/후 통합 Feature 벡터 시각화 (Y-Target Levels 별로 통합 Feature 벡터가 잘 분류되었는지 파악하기 위함)
 
 4️⃣ **Captioning 디코더**
 - Transformer 기반 Decoder 설계
 - 학습: Teacher Forcing + Cross Entropy Loss
-- Inference: Greedy / Beam Search
+- Inference: Greedy Search 채택
 
 ---
 
 ## 🔍 주요 결과
 
 ### ✅ Segmentation
-- Dice Score: **0.89**
-- IoU: **0.83**
+- Pixel Accuracy: **0.97**
 - 병변 영역 정확한 분리 가능
 
 ### ✅ Image + Meta Captioning
-- 입력: 복부 X-ray + 환자 나이 + 진단 라벨
+- 입력: 복부 X-ray + (환자 나이 + 진단 라벨)
 - 출력 예시:
 This plain abdominal supine radiograph shows prominent gastric distension with features suggestive of pyloric stenosis.
 
@@ -92,7 +94,6 @@ This plain abdominal supine radiograph shows prominent gastric distension with f
 ## 📈 시각 자료
 - Segmentation 예시
 - Captioning 예측 결과 샘플
-- 학습 Loss & BLEU Score 변화 그래프
 *(이미지는 README 내 삽입 가능)*
 
 ---
