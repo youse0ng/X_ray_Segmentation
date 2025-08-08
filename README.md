@@ -57,20 +57,23 @@
 - 의료 영역에 맞춘 커스텀 데이터셋(Point, Image) 생성
 - DeepLabv3 모델 (PyTorch) 모델 재구성 및 파인 튜닝 진행
 - 성능 지표: Pixel Accuracy: 97%
+<img width="1050" height="630" alt="image" src="https://github.com/user-attachments/assets/68f248dd-a053-453d-ae41-420f59f297dc" />
+
 
 3️⃣ **Image + Meta Feature 추출**
 - Vision Transformer(ViT)로 이미지 특징 추출
 - BERT tokenizer로 메타데이터 임베딩
 - Cross-Attention으로 통합 Feature 생성
 - 학습 전/후 통합 Feature 벡터 시각화 (Y-Target Levels 별로 통합 Feature 벡터가 잘 분류되었는지 파악하기 위함)
-
 <img width="1124" height="635" alt="image" src="https://github.com/user-attachments/assets/7f356782-4443-4586-ad69-028d89898285" />
+<img width="1130" height="642" alt="image" src="https://github.com/user-attachments/assets/a3c4944a-fc49-430a-bcca-6d2af607aa9a" />
 
 
 4️⃣ **Captioning 디코더**
 - Transformer 기반 Decoder 설계
 - 학습: Teacher Forcing + Cross Entropy Loss
 - Inference: Greedy Search 채택
+<img width="1032" height="625" alt="image" src="https://github.com/user-attachments/assets/5855fe7a-68a4-4c81-92e1-cf58dc3cf371" />
 
 ---
 
@@ -105,8 +108,7 @@
 - 의료 이미지와 비정형 텍스트 데이터의 융합 처리 경험
 - Vision-Language 모델링과 Cross-Attention 구조 이해
 - Segmentation + Captioning 파이프라인 설계 방법 습득
-- ONNX 모델 활용 및 PyTorch inference 최적화 경험
-
+- ONNX 모델 활용 및 PyTorch inference 최적화 경험: 그러나 뽑아내고 사용하지는 않음 (정상적 작동 CPU: 2초 이내 Inference 가능)
 ---
 
 ## 👨‍💻 참여자
